@@ -3,6 +3,7 @@ package APIFourparks.Backend.Login.Controladores;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +13,12 @@ import APIFourparks.Backend.Login.Controladores.RequestBody.LoginBody;
 import APIFourparks.Backend.Login.Services.ConexionService;
 
 
-
+@CrossOrigin(origins = "localhost:4200")
 @RestController
 @RequestMapping("")
 public class LoginController {
+
+    
 
     private ConexionService DBServicio = ConexionService.obtenerServicio();
 
