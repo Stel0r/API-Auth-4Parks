@@ -14,8 +14,8 @@ import APIFourparks.Backend.Login.Controladores.RequestBody.RegistroClienteBody;
 import APIFourparks.Backend.Login.Services.ConexionService;
 
 
-@CrossOrigin(origins = "localhost:4200")
 @RestController
+@CrossOrigin
 @RequestMapping("")
 public class LoginController {
 
