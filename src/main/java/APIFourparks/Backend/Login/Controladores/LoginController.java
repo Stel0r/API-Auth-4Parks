@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import APIFourparks.Backend.Login.Controladores.RequestBody.LoginBody;
+import APIFourparks.Backend.Login.Controladores.RequestBody.RegistroClienteBody;
 import APIFourparks.Backend.Login.Services.ConexionService;
 
 
@@ -30,5 +31,15 @@ public class LoginController {
             return ResponseEntity.status(403).body(Map.of("mensaje","El usuario o la contraseña son incorrectos"));
         }
     }
+
+    @PostMapping("/registrar")
+    public ResponseEntity<Map<String,Object>> registrarUsuario(@RequestBody RegistroClienteBody body){
+        try {
+            return ResponseEntity.ok().body(Map.of("message",DBServicio.logearUsuario(body)));
+        } catch (Exception e) {
+            return ResponseEntity.status(403).body(Map.of("message",e.getMessage()));
+        }
+    }
+
     
 }
