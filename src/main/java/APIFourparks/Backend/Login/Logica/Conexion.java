@@ -15,9 +15,9 @@ public class Conexion {
     private Conexion() {
         DriverManagerDataSource data = new DriverManagerDataSource();
         data.setDriverClassName("org.mariadb.jdbc.Driver");
-        data.setUrl("jdbc:mariadb://u3r5w4ayhxzdrw87.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/sk5tpg5exm0feve5");
-        data.setUsername("jofvd23kdty2yp7e");
-        data.setPassword("hyxl4jdtsg71lcbi");
+        data.setUrl("jdbc:mariadb://iu51mf0q32fkhfpl.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qs58vsedzpr4mma5");
+        data.setUsername("kyjapvqoeyewm9ik");
+        data.setPassword("mloxu4drkuuqfa3k");
 
         this.template = new JdbcTemplate(data);
     }
