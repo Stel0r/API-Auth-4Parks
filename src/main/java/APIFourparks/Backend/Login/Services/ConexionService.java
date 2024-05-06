@@ -36,8 +36,8 @@ public class ConexionService {
 
     public String logearUsuario(RegistroClienteBody body) throws Exception{
         try {
-            conexion.EjecutarQuery("insert into USUARIO values('"+body.userName+"','"+body.password+"','"+body.email+"','C','A','"+body.firstName+"','"+body.secondName+"','"+body.firstLastName+"','"+body.secondLastName+"')");
-            conexion.EjecutarQuery("insert into CLIENTE values('"+body.typeID+"',"+body.NID+","+body.numberCell+",'0.0.0.0','"+body.userName+"')");
+            conexion.EjecutarQuery("insert into USUARIO values('"+body.userName+"','"+body.password+"','"+body.email+"','C','A','"+body.firstName+"','"+body.secondName+"','"+body.firstLastName+"','"+body.secondLastName+"',0)");
+            conexion.EjecutarQuery("insert into CLIENTE values('"+body.typeID+"',"+body.NID+","+body.numberCell+",'"+body.userName+"',0)");
             return "Registro Exitoso!";
         } catch (Exception e) {
             if(e.getMessage().contains("Duplicate entry")){
