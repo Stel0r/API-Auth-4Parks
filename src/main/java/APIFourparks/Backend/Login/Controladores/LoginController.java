@@ -29,7 +29,7 @@ public class LoginController {
         try {
             return ResponseEntity.ok().body(Map.of("mensaje",DBServicio.logearUsuario(body.user, body.password)));
         } catch (Exception e) {
-            return ResponseEntity.status(403).body(Map.of("mensaje","El usuario o la contraseña son incorrectos"));
+            return ResponseEntity.status(403).body(Map.of("mensaje",e.getMessage()));
         }
     }
 

@@ -29,7 +29,16 @@ public class ConexionService {
     public String logearUsuario(String user, String pass) throws Exception{
         java.util.List<Map<String, Object>> resultado = conexion.SelectQuery("select * from USUARIO where N_NOMBRE_USUARIO='"+user+"' and O_CONTRASEÑA='"+pass+"'");
         if(resultado.size() == 0){
+            resultado = conexion.SelectQuery("select * from USUARIO where N_NOMBRE_USUARIO='"+user+"' ");
+            if(resultado.size()!= 0){
+                conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = N_INTENTOS_FALLIDOS+1 WHERE N_NOMBRE_USUARIO ='"+user+"'");
+                if (((java.math.BigDecimal)resultado.get(0).get("N_INTENTOS_FALLIDOS")).intValue() >= 2){
+                    throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
+                }
+            }
             throw new Exception("Usuario o contraseña incorrecta");
+        }else if(((java.math.BigDecimal)resultado.get(0).get("N_INTENTOS_FALLIDOS")).intValue() >= 3){
+            throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
         }
         return "conectado !";
     }
