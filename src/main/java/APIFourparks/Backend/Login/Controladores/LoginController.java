@@ -23,6 +23,7 @@ public class LoginController {
 
     private ConexionService DBServicio = ConexionService.obtenerServicio();
 
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> loggearUsuario(@RequestBody LoginBody body){
         try {
@@ -32,6 +33,7 @@ public class LoginController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/registrar")
     public ResponseEntity<Map<String,Object>> registrarUsuario(@RequestBody RegistroClienteBody body){
         try {
