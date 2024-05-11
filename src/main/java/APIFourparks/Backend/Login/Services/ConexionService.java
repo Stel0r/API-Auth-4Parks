@@ -33,11 +33,12 @@ public class ConexionService {
             if(resultado.size()!= 0){
                 conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = N_INTENTOS_FALLIDOS+1 WHERE N_NOMBRE_USUARIO ='"+user+"'");
                 if (((java.math.BigDecimal)resultado.get(0).get("N_INTENTOS_FALLIDOS")).intValue() >= 2){
+                    conexion.EjecutarQuery("UPDATE USUARIO SET I_ESTADO = 'B' WHERE N_NOMBRE_USUARIO ='"+user+"'");
                     throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
                 }
             }
             throw new Exception("Usuario o contraseña incorrecta");
-        }else if(((java.math.BigDecimal)resultado.get(0).get("N_INTENTOS_FALLIDOS")).intValue() >= 3){
+        }else if(resultado.get(0).get("I_ESTADO").equals("B")){
             throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
         }
         return "conectado !";
