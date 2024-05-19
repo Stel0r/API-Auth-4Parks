@@ -16,7 +16,6 @@ import APIFourparks.Backend.Login.Services.ConexionService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("")
 public class LoginController {
 
     

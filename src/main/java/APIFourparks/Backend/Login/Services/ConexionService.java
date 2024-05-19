@@ -1,22 +1,23 @@
 package APIFourparks.Backend.Login.Services;
 
-import java.rmi.server.ExportException;
 import java.util.Map;
 
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import APIFourparks.Backend.Login.Controladores.RequestBody.RegistroClienteBody;
 import APIFourparks.Backend.Login.Logica.Conexion;
-import jakarta.validation.OverridesAttribute.List;
-
-
+import APIFourparks.Backend.Login.Services.JwtUtils;
 
 public class ConexionService {
     private static ConexionService servicio;
     private Conexion conexion;
 
+    public JwtUtils jwtUtils;
+
     private ConexionService() {
         conexion = Conexion.obtenerConexion();
+        jwtUtils = new JwtUtils();
     }
 
     public static ConexionService obtenerServicio() {
@@ -26,7 +27,7 @@ public class ConexionService {
         return servicio;
     }
 
-    public String logearUsuario(String user, String pass) throws Exception{
+    public ResponseEntity<Map<String,Object>> logearUsuario(String user, String pass) throws Exception{
         java.util.List<Map<String, Object>> resultado = conexion.SelectQuery("select * from USUARIO where N_NOMBRE_USUARIO='"+user+"' and O_CONTRASEÑA='"+pass+"'");
         if(resultado.size() == 0){
             resultado = conexion.SelectQuery("select * from USUARIO where N_NOMBRE_USUARIO='"+user+"' ");
@@ -41,7 +42,8 @@ public class ConexionService {
         }else if(resultado.get(0).get("I_ESTADO").equals("B")){
             throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
         }
-        return "conectado !";
+        conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO ='"+user+"'");
+        return ResponseEntity.ok().body(Map.of("message","conectado!","token",jwtUtils.generateToken(user)));
     }
 
     public String logearUsuario(RegistroClienteBody body) throws Exception{
