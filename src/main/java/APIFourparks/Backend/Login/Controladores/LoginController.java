@@ -25,7 +25,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> loggearUsuario(@RequestBody LoginBody body){
         try {
-            return ResponseEntity.ok().body(Map.of("mensaje",DBServicio.logearUsuario(body.user, body.password)));
+            return ResponseEntity.ok().body(DBServicio.logearUsuario(body.user, body.password));
         } catch (Exception e) {
             return ResponseEntity.status(403).body(Map.of("mensaje",e.getMessage()));
         }

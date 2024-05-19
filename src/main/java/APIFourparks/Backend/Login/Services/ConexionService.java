@@ -27,7 +27,7 @@ public class ConexionService {
         return servicio;
     }
 
-    public ResponseEntity<Map<String,Object>> logearUsuario(String user, String pass) throws Exception{
+    public Map<String,Object> logearUsuario(String user, String pass) throws Exception{
         java.util.List<Map<String, Object>> resultado = conexion.SelectQuery("select * from USUARIO where N_NOMBRE_USUARIO='"+user+"' and O_CONTRASEÑA='"+pass+"'");
         if(resultado.size() == 0){
             resultado = conexion.SelectQuery("select * from USUARIO where N_NOMBRE_USUARIO='"+user+"' ");
@@ -43,7 +43,7 @@ public class ConexionService {
             throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
         }
         conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO ='"+user+"'");
-        return ResponseEntity.ok().body(Map.of("message","conectado!","token",jwtUtils.generateToken(user)));
+        return Map.of("message","conectado!","token",jwtUtils.generateToken(user));
     }
 
     public String logearUsuario(RegistroClienteBody body) throws Exception{
