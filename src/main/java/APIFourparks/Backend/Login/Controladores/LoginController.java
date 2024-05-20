@@ -18,7 +18,10 @@ import APIFourparks.Backend.Login.Services.ConexionService;
 @CrossOrigin
 public class LoginController {
 
-    
+    class InfoSendPassword {
+        public String nameUser;
+        public String password;
+    }
 
     private ConexionService DBServicio = ConexionService.obtenerServicio();
 
@@ -40,5 +43,13 @@ public class LoginController {
         }
     }
 
+    @PostMapping("/actualizarContra")
+    public ResponseEntity<Map<String,Object>> cambiarContrasena(@RequestBody InfoSendPassword body){
+        try {
+            return ResponseEntity.ok().body(Map.of("message",DBServicio.cambiarContrasena(body.nameUser,body.password)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
     
 }
