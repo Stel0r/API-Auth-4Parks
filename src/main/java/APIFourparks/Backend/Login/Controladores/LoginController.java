@@ -15,14 +15,16 @@ import APIFourparks.Backend.Login.Controladores.RequestBody.RegistroClienteBody;
 import APIFourparks.Backend.Login.Services.ConexionService;
 
 
+class InfoSendPassword {
+    public String nameUser;
+    public String password;
+}
+
 @RestController
 @CrossOrigin
 public class LoginController {
 
-    class InfoSendPassword {
-        public String nameUser;
-        public String password;
-    }
+    
 
     private ConexionService DBServicio = ConexionService.obtenerServicio();
 
