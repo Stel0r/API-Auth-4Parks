@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/actualizarContra")
+    @PatchMapping("/actualizarContra")
     public ResponseEntity<Map<String,Object>> cambiarContrasena(@RequestBody InfoSendPassword body){
         try {
             return ResponseEntity.ok().body(Map.of("message",DBServicio.cambiarContrasena(body.nameUser,body.password)));
