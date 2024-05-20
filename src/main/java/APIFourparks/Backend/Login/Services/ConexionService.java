@@ -46,11 +46,11 @@ public class ConexionService {
         return Map.of("message","conectado!","token",jwtUtils.generateToken(user));
     }
 
-    public String logearUsuario(RegistroClienteBody body) throws Exception{
+    public Map<String,Object> registrarUsuario(RegistroClienteBody body) throws Exception{
         try {
             conexion.EjecutarQuery("insert into USUARIO values('"+body.userName+"','"+body.password+"','"+body.email+"','C','A','"+body.firstName+"','"+body.secondName+"','"+body.firstLastName+"','"+body.secondLastName+"',0)");
             conexion.EjecutarQuery("insert into CLIENTE values('"+body.typeID+"',"+body.NID+","+body.numberCell+",'"+body.userName+"',0)");
-            return "Registro Exitoso!";
+            return Map.of("message","Registro Exitoso!","token",jwtUtils.generateToken(body.userName));
         } catch (Exception e) {
             if(e.getMessage().contains("Duplicate entry")){
                 if(e.getMessage().contains("USUARIO")){

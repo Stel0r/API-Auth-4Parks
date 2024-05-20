@@ -40,7 +40,7 @@ public class LoginController {
     @PostMapping("/registrar")
     public ResponseEntity<Map<String,Object>> registrarUsuario(@RequestBody RegistroClienteBody body){
         try {
-            return ResponseEntity.ok().body(Map.of("message",DBServicio.logearUsuario(body)));
+            return ResponseEntity.ok().body(DBServicio.registrarUsuario(body));
         } catch (Exception e) {
             return ResponseEntity.status(403).body(Map.of("message",e.getMessage()));
         }
