@@ -66,7 +66,7 @@ public class ConexionService {
     }
 
     public String cambiarContrasena(String nameUser, String password) {
-        conexion.EjecutarQuery("UPDATE USUARIO SET O_CONTRASEÑA ="+password+" WHERE N_NOMBRE_USUARIO ="+ nameUser);
+        conexion.EjecutarQuery("UPDATE USUARIO SET O_CONTRASEÑA ='"+password+"' WHERE N_NOMBRE_USUARIO ='"+ nameUser+"'");
         return "se ha actualizado la contraseña exitosamente";
     }
 
