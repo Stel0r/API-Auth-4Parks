@@ -26,7 +26,7 @@ public class JwtUtils {
     }
 
     public boolean isTokenValid(String token, String user){
-        return user.equals(getClaims(token).get("user"));
+        return user.equals(getClaims(token).getSubject());
     }
 
     public boolean isTokenExpired(String token){
