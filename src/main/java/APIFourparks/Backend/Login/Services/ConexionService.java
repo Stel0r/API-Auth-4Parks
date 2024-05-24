@@ -43,7 +43,7 @@ public class ConexionService {
             throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
         }
         conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO ='"+user+"'");
-        return Map.of("message","conectado!","token",jwtUtils.generateToken(user));
+        return Map.of("message","conectado!","token",jwtUtils.generateToken(user),"rol",resultado.get(0).get("I_ROL"));
     }
 
     public Map<String,Object> registrarUsuario(RegistroClienteBody body) throws Exception{
