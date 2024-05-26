@@ -7,10 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import APIFourparks.Backend.Login.Controladores.Repositorios.AdminRespository;
+import APIFourparks.Backend.Login.Controladores.Repositorios.UsuarioRepository;
+import APIFourparks.Backend.Login.Logica.Usuario;
 
 @RestController
 @CrossOrigin
@@ -19,6 +22,8 @@ public class AdministradorController {
 
     @Autowired
     public AdminRespository adminRespository;
+    @Autowired
+    public UsuarioRepository usuarioRepository;
     
     @GetMapping("/obtener/{user}")
     public Map<String,Object> obtenerAdmin(@PathVariable(value = "user") String user){
@@ -28,6 +33,12 @@ public class AdministradorController {
     @GetMapping("/obtenerUsuarios")
     public Map<String,Object> obtenerUsuarios(){
         return adminRespository.obtenerUsuariosEstado();
+    }
+
+    @GetMapping("/desbloquear/{usuario}")
+    public Map<String,Object> desbloquearusuario(@PathVariable(value = "usuario") String user){
+        usuarioRepository.desbloquear(user);
+        return Map.of("response","el usuario se ha desbloqueado");
     }
 
 
