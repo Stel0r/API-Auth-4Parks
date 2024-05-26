@@ -25,4 +25,10 @@ public class AdministradorController {
         return adminRespository.obtenerAdmin(user);
     }
 
+    @GetMapping("/obtenerUsuarios")
+    public Map<String,Object> obtenerUsuarios(){
+        return adminRespository.obtenerUsuariosEstado();
+    }
+
+
 }
