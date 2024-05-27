@@ -1,5 +1,6 @@
 package APIFourparks.Backend.Login.Controladores.Repositorios;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,7 @@ public interface AdminRespository extends CrudRepository<Administrador,String>{
     public Map<String,Object> obtenerAdmin(String user);
 
     @Query(value = "select c.I_TIPO_DOC tipoDoc, c.K_NUM_DOCUMENTO numDocumento, CONCAT(u.N_PRIMER_NOMBRE, ' ' ,u.N_PRIMER_APELLIDO) as nombre,u.O_EMAIL as email, u.I_ESTADO as estado from CLIENTE c,USUARIO u where c.N_NOMBRE_USUARIO = u.N_NOMBRE_USUARIO" 
-    +"UNION select 'G' as tipoDoc, g.K_COD_GERENTE numDocumento, CONCAT(u.N_PRIMER_NOMBRE, ' ' ,u.N_PRIMER_APELLIDO) as nombre,u.O_EMAIL as email, u.I_ESTADO as estado from GERENTE g,USUARIO u where g.N_NOMBRE_USUARIO = u.N_NOMBRE_USUARIO"
-    +"UNION select 'A' as tipoDoc, g.K_COD_ADMINISTRADOR numDocumento, CONCAT(u.N_PRIMER_NOMBRE, ' ' ,u.N_PRIMER_APELLIDO) as nombre,u.O_EMAIL as email, u.I_ESTADO as estado from ADMINISTRADOR g,USUARIO u where g.N_NOMBRE_USUARIO = u.N_NOMBRE_USUARIO",nativeQuery = true)
-    public Map<String,Object> obtenerUsuariosEstado();
+    +" UNION select 'G' as tipoDoc, g.K_COD_GERENTE as numDocumento, CONCAT(u.N_PRIMER_NOMBRE, ' ' ,u.N_PRIMER_APELLIDO) as nombre,u.O_EMAIL as email, u.I_ESTADO as estado from GERENTE g,USUARIO u where g.N_NOMBRE_USUARIO = u.N_NOMBRE_USUARIO"
+    +" UNION select 'A' as tipoDoc, g.K_COD_ADMINISTRADOR as numDocumento, CONCAT(u.N_PRIMER_NOMBRE, ' ' ,u.N_PRIMER_APELLIDO) as nombre,u.O_EMAIL as email, u.I_ESTADO as estado from ADMINISTRADOR g,USUARIO u where g.N_NOMBRE_USUARIO = u.N_NOMBRE_USUARIO",nativeQuery = true)
+    public List<Map<String,Object>> obtenerUsuariosEstado();
 }

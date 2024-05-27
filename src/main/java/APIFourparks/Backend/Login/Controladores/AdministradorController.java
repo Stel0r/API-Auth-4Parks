@@ -1,5 +1,6 @@
 package APIFourparks.Backend.Login.Controladores;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public class AdministradorController {
     }
 
     @GetMapping("/obtenerUsuarios")
-    public Map<String,Object> obtenerUsuarios(){
+    public List<Map<String,Object>> obtenerUsuarios(){
+        System.out.println("aaaaaa");
         return adminRespository.obtenerUsuariosEstado();
     }
 
