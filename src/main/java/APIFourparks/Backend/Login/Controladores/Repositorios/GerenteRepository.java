@@ -12,4 +12,7 @@ import APIFourparks.Backend.Login.Logica.Gerente;
 public interface GerenteRepository extends CrudRepository<Gerente,String>{
     @Query(value = "select u.N_NOMBRE_USUARIO, u.O_EMAIL, u.I_ROL, u.I_ESTADO, u.N_PRIMER_NOMBRE, u.N_SEGUNDO_NOMBRE, u.N_PRIMER_APELLIDO, u.N_SEGUNDO_APELLIDO, a.K_COD_GERENTE from GERENTE a, USUARIO u where a.N_NOMBRE_USUARIO = u.N_NOMBRE_USUARIO and a.N_NOMBRE_USUARIO = ?",nativeQuery = true)
     public Map<String,Object> obtenerGerente(String user);
+
+    @Query(value = "UPDATE Parqueadero SET K_COD_GERENTE = ? WHERE K_COD_PARQUEADERO = ?",nativeQuery = true)
+    public void asignarParqueadero(String codGerente, String codParqueadero);
 }
