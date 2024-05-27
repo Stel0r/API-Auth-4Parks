@@ -67,7 +67,11 @@ public class AdministradorController {
     public ResponseEntity<Map<String,Object>> registrarGerente(@RequestBody GerenteInterface body){
         
         try {
-            Usuario user = new Usuario();
+            Usuario user = usuarioRepository.findById(body.userName).orElse(null);
+            if (user != null) {
+                return ResponseEntity.badRequest().body(Map.of("Response","El usuario ya existe"));
+            }
+            user = new Usuario();
             user.userName = body.userName;
             user.pass = body.passSha;
             user.email = body.email;
