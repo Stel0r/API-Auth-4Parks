@@ -26,8 +26,8 @@ public class MailService {
 
             dotenv = Dotenv.load();
             ClientOptions options = ClientOptions.builder()
-                    .apiKey(dotenv.get("MAIL_USER"))
-                    .apiSecretKey(dotenv.get("MAIL_PASSWORD"))
+                    .apiKey(dotenv.get("4fd36d19df920b708f9068e00c9a2b98"))
+                    .apiSecretKey(dotenv.get("3a5b9ca6d5389e2e2c9ce17489e7848b"))
                     .build();
 
             client = new MailjetClient(options);
