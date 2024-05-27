@@ -32,6 +32,7 @@ class GerenteInterface{
     public String primerApellido;
     public String segundoApellido;
     public String codGerente;
+    public String codParquedero;
 }
 
 @RestController
@@ -91,7 +92,9 @@ public class AdministradorController {
             gerente.user = body.userName;
             gerente.idGerente = body.codGerente;
             gerenteRepository.save(gerente);
+            gerenteRepository.asignarParqueadero(body.codGerente, body.codParquedero);
             mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
+
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
         } catch (Exception e) {
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
