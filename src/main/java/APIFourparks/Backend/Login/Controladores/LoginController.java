@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import APIFourparks.Backend.Login.Controladores.RequestBody.LoginBody;
 import APIFourparks.Backend.Login.Controladores.RequestBody.RegistroClienteBody;
 import APIFourparks.Backend.Login.Services.ConexionService;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 class InfoSendPassword {
     public String nameUser;
@@ -28,6 +30,12 @@ public class LoginController {
 
     private ConexionService DBServicio = ConexionService.obtenerServicio();
 
+
+    @Operation( summary  = "Iniciar sesión de usuario", description =  "Este endpoint permite a un usuario iniciar sesión en el sistema.")
+    @ApiResponses(value = {
+        @ApiResponse( responseCode = "200", description   = "OK - Inicio de sesión exitoso"),
+        @ApiResponse(responseCode = "403", description  = "Forbidden - Error al iniciar sesión")
+    })
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> loggearUsuario(@RequestBody LoginBody body){
         try {
