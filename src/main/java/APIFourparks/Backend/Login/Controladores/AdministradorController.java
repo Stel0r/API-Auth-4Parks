@@ -23,6 +23,7 @@ import jakarta.transaction.Transactional;
 class GerenteInterface{
     public String userName;
     public String pass;
+    public String passSha;
     public String email;
     public String primerNombre;
     public String segundoNombre;
