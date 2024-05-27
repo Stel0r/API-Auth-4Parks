@@ -63,14 +63,13 @@ public class AdministradorController {
     }
 
     @PostMapping("/registrarGerente")
-    @Transactional
     public ResponseEntity<Map<String,Object>> registrarGerente(@RequestBody GerenteInterface body){
         
         try {
             System.out.println("se ha recibido la peticion");
             Usuario user = new Usuario();
             user.userName = body.userName;
-            user.pass = body.pass;
+            user.pass = body.passSha;
             user.email = body.email;
             user.primerNombre = body.primerNombre;
             user.segundoNombre = body.segundoNombre;
