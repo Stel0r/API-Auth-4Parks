@@ -10,12 +10,10 @@ import com.mailjet.client.transactional.SendEmailsRequest;
 import com.mailjet.client.transactional.TransactionalEmail;
 import com.mailjet.client.transactional.response.SendEmailsResponse;
 
-import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
 public class MailService {
     private static MailjetClient client;
-    private static Dotenv dotenv;
 
     private MailService() {
         
@@ -23,11 +21,9 @@ public class MailService {
 
     public static MailService obtenerServicio(){
         if (client == null) {
-
-            dotenv = Dotenv.load();
             ClientOptions options = ClientOptions.builder()
-                    .apiKey(dotenv.get("4fd36d19df920b708f9068e00c9a2b98"))
-                    .apiSecretKey(dotenv.get("3a5b9ca6d5389e2e2c9ce17489e7848b"))
+                    .apiKey("4fd36d19df920b708f9068e00c9a2b98")
+                    .apiSecretKey("3a5b9ca6d5389e2e2c9ce17489e7848b")
                     .build();
 
             client = new MailjetClient(options);
