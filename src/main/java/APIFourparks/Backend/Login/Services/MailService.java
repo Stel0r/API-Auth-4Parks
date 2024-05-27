@@ -24,7 +24,7 @@ public class MailService {
     public static MailService obtenerServicio(){
         if (client == null) {
 
-            dotenv = Dotenv.load();
+            dotenv = Dotenv.configure().directory("src/main/java/APIFourparks/Backend/Login").load();
             ClientOptions options = ClientOptions.builder()
                     .apiKey(dotenv.get("MAIL_USER"))
                     .apiSecretKey(System.getenv("MAIL_PASSWORD"))
