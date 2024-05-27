@@ -63,10 +63,10 @@ public class AdministradorController {
     }
 
     @PostMapping("/registrarGerente")
+    @Transactional
     public ResponseEntity<Map<String,Object>> registrarGerente(@RequestBody GerenteInterface body){
         
         try {
-            System.out.println("se ha recibido la peticion");
             Usuario user = new Usuario();
             user.userName = body.userName;
             user.pass = body.passSha;
@@ -79,16 +79,13 @@ public class AdministradorController {
             user.estado = "A";
             System.out.println(body.userName);
             usuarioRepository.save(user);
-            System.out.println("se ha guardado el usuario"	);
             Gerente gerente = new Gerente();
             gerente.user = body.userName;
             gerente.idGerente = body.codGerente;
             gerenteRepository.save(gerente);
-            System.out.println("se ha guardado el gerente");
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
             
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(Map.of("Response",e.getMessage()));
 
         }
