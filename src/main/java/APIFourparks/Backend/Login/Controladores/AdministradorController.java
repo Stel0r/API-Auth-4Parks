@@ -18,6 +18,7 @@ import APIFourparks.Backend.Login.Controladores.Repositorios.GerenteRepository;
 import APIFourparks.Backend.Login.Controladores.Repositorios.UsuarioRepository;
 import APIFourparks.Backend.Login.Logica.Gerente;
 import APIFourparks.Backend.Login.Logica.Usuario;
+import APIFourparks.Backend.Login.Services.MailService;
 import jakarta.transaction.Transactional;
 
 class GerenteInterface{
@@ -44,6 +45,8 @@ public class AdministradorController {
     
     @Autowired
     public GerenteRepository gerenteRepository;
+
+    private MailService mailService = MailService.obtenerServicio();
 
     @GetMapping("/obtener/{user}")
     public Map<String,Object> obtenerAdmin(@PathVariable(value = "user") String user){
@@ -87,6 +90,7 @@ public class AdministradorController {
             gerente.user = body.userName;
             gerente.idGerente = body.codGerente;
             gerenteRepository.save(gerente);
+            mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
             
         } catch (Exception e) {
