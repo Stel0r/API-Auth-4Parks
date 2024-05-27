@@ -33,3 +33,4 @@ build/
 .vscode/
 src/.env
 src/main/java/APIFourparks/Backend/Login/.env
+.env
