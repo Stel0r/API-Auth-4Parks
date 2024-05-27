@@ -11,7 +11,7 @@ import APIFourparks.Backend.Login.Logica.Usuario;
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario,String>{
 
-    @Query(value = "UPDATE USUARIO SET I_ESTADO = 'A',N_INTENTOS_FALLIDOS WHERE N_NOMBRE_USUARIO = ?",nativeQuery = true)
+    @Query(value = "UPDATE USUARIO SET I_ESTADO = 'A',N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO = ?",nativeQuery = true)
     public void desbloquear(String user);
 
 }
