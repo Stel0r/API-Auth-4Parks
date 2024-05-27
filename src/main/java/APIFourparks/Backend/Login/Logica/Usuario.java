@@ -15,8 +15,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "USUARIO")
 public class Usuario implements UserDetails{
-    @Id
+    
     @Column(name = "N_NOMBRE_USUARIO")
+    @Id
     public String userName;
     @Column(name = "I_ROL")
     public String rol;

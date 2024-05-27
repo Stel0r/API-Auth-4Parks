@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,6 @@ import APIFourparks.Backend.Login.Controladores.Repositorios.GerenteRepository;
 import APIFourparks.Backend.Login.Controladores.Repositorios.UsuarioRepository;
 import APIFourparks.Backend.Login.Logica.Gerente;
 import APIFourparks.Backend.Login.Logica.Usuario;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
 
 class GerenteInterface{
@@ -75,6 +75,9 @@ public class AdministradorController {
             user.segundoNombre = body.segundoNombre;
             user.primerApellido = body.primerApellido;
             user.segundoApellido = body.segundoApellido;
+            user.rol = "G";
+            user.estado = "A";
+            System.out.println(body.userName);
             usuarioRepository.save(user);
             System.out.println("se ha guardado el usuario"	);
             Gerente gerente = new Gerente();
@@ -85,6 +88,7 @@ public class AdministradorController {
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
             
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(Map.of("Response",e.getMessage()));
 
         }
