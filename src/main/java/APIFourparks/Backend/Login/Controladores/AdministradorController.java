@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.interceptor.TransactionInterceptor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,10 +93,9 @@ public class AdministradorController {
             gerenteRepository.save(gerente);
             mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
-            
         } catch (Exception e) {
+            TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
             return ResponseEntity.badRequest().body(Map.of("Response",e.getMessage()));
-
         }
         
     }
