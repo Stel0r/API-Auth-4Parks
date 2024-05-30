@@ -56,6 +56,8 @@ public class ConexionService {
             List<Map<String,Object>> gerente = this.conexion.SelectQuery("select * from LOGIN_GERENTE where N_NOMBRE_USUARIO = '"+user+"'");
             if (gerente.size() != 0){
                 response.put("firstlogin",true);
+            }else{
+                response.put("firstlogin",false);
             }
         }
         return response;
