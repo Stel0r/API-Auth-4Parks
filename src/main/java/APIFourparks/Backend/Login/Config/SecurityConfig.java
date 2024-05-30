@@ -37,7 +37,7 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(request -> request.
         requestMatchers("/login","/registrar","/swagger-ui/**","/v3/api-docs/**").permitAll().
-        requestMatchers("/actualizarContra").hasAuthority("C").
+        requestMatchers("/actualizarContra").hasAnyAuthority("C","G").
         requestMatchers("/gerente/**").hasAnyAuthority("G","A").
         requestMatchers("/administrador/**").hasAuthority("A").
         anyRequest().authenticated())
