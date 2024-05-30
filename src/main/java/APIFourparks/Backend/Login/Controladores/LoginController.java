@@ -37,12 +37,8 @@ public class LoginController {
         @ApiResponse(responseCode = "403", description  = "Forbidden - Error al iniciar sesión")
     })
     @PostMapping("/login")
-    public ResponseEntity<Map<String,Object>> loggearUsuario(@RequestBody LoginBody body){
-        try {
+    public ResponseEntity<Map<String,Object>> loggearUsuario(@RequestBody LoginBody body) throws Exception{
             return ResponseEntity.ok().body(DBServicio.logearUsuario(body.user, body.password));
-        } catch (Exception e) {
-            return ResponseEntity.status(403).body(Map.of("mensaje",e.getMessage()));
-        }
     }
 
     @PostMapping("/registrar")

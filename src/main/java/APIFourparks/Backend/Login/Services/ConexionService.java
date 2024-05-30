@@ -1,5 +1,6 @@
 package APIFourparks.Backend.Login.Services;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,12 +52,15 @@ public class ConexionService {
             throw new Exception("Su cuenta esta bloqueada bloqueada, por favor comuniquese con el Administrador");
         }
         conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO ='"+user+"'");
-        Map<String,Object> response = Map.of("message","conectado!","token",jwtUtils.generateToken(user),"rol",resultado.get(0).get("I_ROL"));
-        if (resultado.get(0).get("I_ROL").equals('G')){
+        HashMap<String,Object> response = new HashMap<>(Map.of("message","conectado!","token",jwtUtils.generateToken(user),"rol",resultado.get(0).get("I_ROL")));
+        
+        if (resultado.get(0).get("I_ROL").equals("G")){
             List<Map<String,Object>> gerente = this.conexion.SelectQuery("select * from LOGIN_GERENTE where N_NOMBRE_USUARIO = '"+user+"'");
+            System.out.println(gerente.size());
             if (gerente.size() != 0){
                 response.put("firstlogin",true);
             }else{
+                System.out.println(response);
                 response.put("firstlogin",false);
             }
         }
