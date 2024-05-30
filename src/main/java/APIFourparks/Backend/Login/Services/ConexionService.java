@@ -52,7 +52,7 @@ public class ConexionService {
         }
         conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO ='"+user+"'");
         Map<String,Object> response = Map.of("message","conectado!","token",jwtUtils.generateToken(user),"rol",resultado.get(0).get("I_ROL"));
-        if (response.get("rol").equals('G')){
+        if (resultado.get(0).get("I_ROL").equals('G')){
             List<Map<String,Object>> gerente = this.conexion.SelectQuery("select * from LOGIN_GERENTE where N_NOMBRE_USUARIO = '"+user+"'");
             if (gerente.size() != 0){
                 response.put("firstlogin",true);
