@@ -39,7 +39,6 @@ public class MailService {
                 .htmlPart("<h1>Bienvenido a FourParks</h1> <p>Nos enorgullece recibirte en nuestro equipo su nueva contraseña y usuario los encontrara a continuacion</p><p>Usuario:"+usuario+"</p><p>Contraseña:"+contrasena+"</p>")
                 .subject("Bienvenido a Fourparks !") 
                 .header("test-header-key", "test-value")
-                .customID("custom-id-value")
                 .build();
 
         SendEmailsRequest request = SendEmailsRequest
@@ -50,5 +49,26 @@ public class MailService {
         // act
         SendEmailsResponse response = request.sendWith(client);
     }
+
+    public void mandarCorreoBloqueo(String correoDestino,String usuario) throws MailjetException{
+        TransactionalEmail message1 = TransactionalEmail
+                .builder()
+                .to(new SendContact(correoDestino, "stanislav"))
+                .from(new SendContact("diego.felipe.gamez@gmail.com", "Mailjet integration test"))
+                .htmlPart("<h1>Nuevo Usuario Bloqueado</h1> <p>se informa que el usuario "+usuario+" ha sido bloqueado de la plataforma four-parks, Puede desbloquear el usuario ingresando al area administrativa y desbloqueandolo</p>")
+                .subject("Alerta de bloqueo de usuario") 
+                .header("test-header-key", "test-value")
+                .build();
+
+        SendEmailsRequest request = SendEmailsRequest
+                .builder()
+                .message(message1) // you can add up to 50 messages per request
+                .build();
+
+        // act
+        SendEmailsResponse response = request.sendWith(client);
+    }
+
+
 
 }

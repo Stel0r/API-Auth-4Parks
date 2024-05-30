@@ -1,9 +1,11 @@
 package APIFourparks.Backend.Login.Services;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import APIFourparks.Backend.Login.Controladores.RequestBody.RegistroClienteBody;
 import APIFourparks.Backend.Login.Logica.Conexion;
@@ -14,6 +16,8 @@ public class ConexionService {
     private Conexion conexion;
 
     public JwtUtils jwtUtils;
+
+    private MailService mailService = MailService.obtenerServicio();
 
     private ConexionService() {
         conexion = Conexion.obtenerConexion();
@@ -35,15 +39,26 @@ public class ConexionService {
                 conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = N_INTENTOS_FALLIDOS+1 WHERE N_NOMBRE_USUARIO ='"+user+"'");
                 if (((java.math.BigDecimal)resultado.get(0).get("N_INTENTOS_FALLIDOS")).intValue() >= 2){
                     conexion.EjecutarQuery("UPDATE USUARIO SET I_ESTADO = 'B' WHERE N_NOMBRE_USUARIO ='"+user+"'");
-                    throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
+                    List<Map<String,Object>> adminRes =  this.conexion.SelectQuery("select O_EMAIL from USUARIO where I_ROL = 'A'");
+                    if(adminRes.size() != 0){
+                        mailService.mandarCorreoBloqueo(adminRes.get(0).get("O_EMAIL").toString(), user);
+                    }
+                    throw new Exception("por seguridad su cuenta ha sido bloqueada, el administrador sera notificado.");
                 }
             }
             throw new Exception("Usuario o contraseña incorrecta");
         }else if(resultado.get(0).get("I_ESTADO").equals("B")){
-            throw new Exception("Su cuenta ha sido bloqueada, por favor comuniquese con un Administrador");
+            throw new Exception("Su cuenta esta bloqueada bloqueada, por favor comuniquese con el Administrador");
         }
         conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO ='"+user+"'");
-        return Map.of("message","conectado!","token",jwtUtils.generateToken(user),"rol",resultado.get(0).get("I_ROL"));
+        Map<String,Object> response = Map.of("message","conectado!","token",jwtUtils.generateToken(user),"rol",resultado.get(0).get("I_ROL"));
+        if (response.get("rol").equals('G')){
+            List<Map<String,Object>> gerente = this.conexion.SelectQuery("select * from LOGIN_GERENTE where N_NOMBRE_USUARIO = '"+user+"'");
+            if (gerente.size() != 0){
+                response.put("firstlogin",true);
+            }
+        }
+        return response;
     }
 
     public Map<String,Object> registrarUsuario(RegistroClienteBody body) throws Exception{
@@ -67,6 +82,9 @@ public class ConexionService {
 
     public String cambiarContrasena(String nameUser, String password) {
         conexion.EjecutarQuery("UPDATE USUARIO SET O_CONTRASEÑA ='"+password+"' WHERE N_NOMBRE_USUARIO ='"+ nameUser+"'");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains('G')){
+            conexion.EjecutarQuery("DELETE FROM LOGIN_GERENTE WHERE N_NOMBRE_USUARIO = '"+nameUser+"'");
+        }
         return "se ha actualizado la contraseña exitosamente";
     }
 
