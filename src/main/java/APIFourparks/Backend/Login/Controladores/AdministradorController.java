@@ -68,7 +68,6 @@ public class AdministradorController {
     }
 
     @PostMapping("/registrarGerente")
-    @Transactional
     public ResponseEntity<Map<String,Object>> registrarGerente(@RequestBody GerenteInterface body){
         
         try {

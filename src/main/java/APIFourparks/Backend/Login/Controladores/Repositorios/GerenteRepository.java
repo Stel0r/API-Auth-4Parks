@@ -12,12 +12,16 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface GerenteRepository extends CrudRepository<Gerente,String>{
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Parqueadero SET K_COD_GERENTE = ? WHERE K_COD_PARQUEADERO = ?",nativeQuery = true)
+    public void asignarParqueadero(String codGerente, String codParqueadero);
+
     @Query(value = "select u.N_NOMBRE_USUARIO, u.O_EMAIL, u.I_ROL, u.I_ESTADO, u.N_PRIMER_NOMBRE, u.N_SEGUNDO_NOMBRE, u.N_PRIMER_APELLIDO, u.N_SEGUNDO_APELLIDO, a.K_COD_GERENTE from GERENTE a, USUARIO u where a.N_NOMBRE_USUARIO = u.N_NOMBRE_USUARIO and a.N_NOMBRE_USUARIO = ?",nativeQuery = true)
     public Map<String,Object> obtenerGerente(String user);
 
-    @Modifying
-    @Query(nativeQuery = true,value = "UPDATE Parqueadero SET K_COD_GERENTE = ? WHERE K_COD_PARQUEADERO = ?")
-    public int asignarParqueadero(String codGerente, String codParqueadero);
+    
 
     @Query(value = "insert into LOGIN_GERENTE values(?)",nativeQuery = true)
     public void insertarLoginGerente(String user);
