@@ -96,8 +96,8 @@ public class AdministradorController {
             gerente.idGerente = body.codGerente;
 
             gerenteRepository.save(gerente);
-            DBservicio.asingnarParqueadero(body.codGerente, body.codParqueadero);
             mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
+            DBservicio.asingnarParqueadero(body.codGerente, body.codParqueadero);
             gerenteRepository.insertarLoginGerente(user.userName);
 
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
