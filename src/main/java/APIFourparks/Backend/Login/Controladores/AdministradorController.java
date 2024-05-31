@@ -33,7 +33,7 @@ class GerenteInterface{
     public String primerApellido;
     public String segundoApellido;
     public String codGerente;
-    public String codParquedero;
+    public String codParqueadero;
 }
 
 @RestController
@@ -96,7 +96,7 @@ public class AdministradorController {
             gerente.idGerente = body.codGerente;
 
             gerenteRepository.save(gerente);
-            DBservicio.asingnarParqueadero(body.codGerente, body.codParquedero);
+            DBservicio.asingnarParqueadero(body.codGerente, body.codParqueadero);
             mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
             gerenteRepository.insertarLoginGerente(user.userName);
 
