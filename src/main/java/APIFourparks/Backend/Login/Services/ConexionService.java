@@ -68,7 +68,7 @@ public class ConexionService {
     }
 
     public void asingnarParqueadero(String codGerente,String codParqueadero){
-        conexion.EjecutarQuery("UPDATE Parqueadero SET K_COD_PARQUEADERO = '"+codParqueadero+"' WHERE K_COD_GERENTE = '"+codGerente+"'");
+        conexion.EjecutarQuery("UPDATE Parqueadero SET K_COD_GERENTE = '"+codGerente+"' WHERE K_COD_PARQUEADERO = '"+codParqueadero+"'");
     }
 
     public Map<String,Object> registrarUsuario(RegistroClienteBody body) throws Exception{
