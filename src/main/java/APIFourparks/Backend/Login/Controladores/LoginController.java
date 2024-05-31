@@ -41,7 +41,7 @@ public class LoginController {
         try {
             return ResponseEntity.ok().body(DBServicio.logearUsuario(body.user, body.password));
         } catch (Exception e) {
-            return ResponseEntity.status(403).body(Map.of("message",e.getMessage()));
+            return ResponseEntity.status(403).body(Map.of("mensaje",e.getMessage()));
         }
     }
 
