@@ -8,11 +8,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import APIFourparks.Backend.Login.Logica.Gerente;
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface GerenteRepository extends CrudRepository<Gerente,String>{
 
     @Modifying
+    @Transactional
     @Query(value = "UPDATE Parqueadero SET K_COD_GERENTE = ? WHERE K_COD_PARQUEADERO = ?",nativeQuery = true)
     public void asignarParqueadero(String codGerente, String codParqueadero);
 
@@ -20,7 +22,7 @@ public interface GerenteRepository extends CrudRepository<Gerente,String>{
     public Map<String,Object> obtenerGerente(String user);
 
     
-
+    @Modifying
     @Query(value = "insert into LOGIN_GERENTE values(?)",nativeQuery = true)
     public void insertarLoginGerente(String user);
 }
