@@ -100,6 +100,11 @@ public class AdministradorController {
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
         } catch (Exception e) {
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
+            if(e.getMessage().contains("Duplicate entry")){
+                if(e.getMessage().contains("UK_EMAIL")){
+                    return ResponseEntity.badRequest().body(Map.of("Response","El correo ya esta registrado")); 
+                }
+            }
             return ResponseEntity.badRequest().body(Map.of("Response",e.getMessage()));
         }
         
