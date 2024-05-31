@@ -14,7 +14,6 @@ import jakarta.transaction.Transactional;
 public interface GerenteRepository extends CrudRepository<Gerente,String>{
 
     @Modifying
-    @Transactional
     @Query(value = "UPDATE Parqueadero SET K_COD_GERENTE = ? WHERE K_COD_PARQUEADERO = ?",nativeQuery = true)
     public void asignarParqueadero(String codGerente, String codParqueadero);
 
