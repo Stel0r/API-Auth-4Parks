@@ -96,6 +96,7 @@ public class AdministradorController {
             gerente.idGerente = body.codGerente;
             gerenteRepository.save(gerente);
 
+            gerenteRepository.asignarParqueadero(body.codGerente,body.codParqueadero);
             mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
             gerenteRepository.insertarLoginGerente(user.userName);
 
