@@ -70,7 +70,7 @@ public class AdministradorController {
         return Map.of("response","el usuario se ha desbloqueado");
     }
 
-
+    @Transactional
     @PostMapping("/registrarGerente")
     public ResponseEntity<Map<String,Object>> registrarGerente(@RequestBody GerenteInterface body){
         
@@ -97,7 +97,6 @@ public class AdministradorController {
             gerenteRepository.save(gerente);
 
             mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
-            DBservicio.asingnarParqueadero(body.codGerente, body.codParqueadero);
             gerenteRepository.insertarLoginGerente(user.userName);
 
             return ResponseEntity.ok().body(Map.of("Response","se ha agregado de forma exitosa al Gerente nuevo"));
