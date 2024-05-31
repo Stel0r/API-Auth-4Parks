@@ -67,6 +67,10 @@ public class ConexionService {
         return response;
     }
 
+    public void asingnarParqueadero(String codGerente,String codParqueadero){
+        conexion.EjecutarQuery("UPDATE GERENTE SET K_COD_PARQUEADERO = '"+codParqueadero+"' WHERE K_COD_GERENTE = '"+codGerente+"'");
+    }
+
     public Map<String,Object> registrarUsuario(RegistroClienteBody body) throws Exception{
         try {
             conexion.EjecutarQuery("insert into USUARIO values('"+body.userName+"','"+body.password+"','"+body.email+"','C','A','"+body.firstName+"','"+body.secondName+"','"+body.firstLastName+"','"+body.secondLastName+"',0)");

@@ -37,7 +37,8 @@ public class MailService {
                 .to(new SendContact(correoDestino, "stanislav"))
                 .from(new SendContact("diego.felipe.gamez@gmail.com", "Mailjet integration test"))
                 .htmlPart("<h1>Bienvenido a FourParks</h1> <p>Nos enorgullece recibirte en nuestro equipo su nueva contraseña y usuario los encontrara a continuacion</p><p>Usuario:"+usuario+"</p><p>Contraseña:"+contrasena+"</p>")
-                .subject("Bienvenido a Fourparks !") 
+                .subject("Bienvenido a Fourparks !")
+                .customID("custom id")
                 .header("test-header-key", "test-value")
                 .build();
 

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,8 @@ import APIFourparks.Backend.Login.Controladores.Repositorios.GerenteRepository;
 import APIFourparks.Backend.Login.Controladores.Repositorios.UsuarioRepository;
 import APIFourparks.Backend.Login.Logica.Gerente;
 import APIFourparks.Backend.Login.Logica.Usuario;
+import APIFourparks.Backend.Login.Services.ConexionService;
 import APIFourparks.Backend.Login.Services.MailService;
-import jakarta.transaction.Transactional;
 
 class GerenteInterface{
     public String userName;
@@ -50,6 +51,8 @@ public class AdministradorController {
 
     private MailService mailService = MailService.obtenerServicio();
 
+    private ConexionService DBservicio = ConexionService.obtenerServicio();
+
     @GetMapping("/obtener/{user}")
     public Map<String,Object> obtenerAdmin(@PathVariable(value = "user") String user){
         return adminRespository.obtenerAdmin(user);
@@ -67,6 +70,7 @@ public class AdministradorController {
         return Map.of("response","el usuario se ha desbloqueado");
     }
 
+    @Transactional
     @PostMapping("/registrarGerente")
     public ResponseEntity<Map<String,Object>> registrarGerente(@RequestBody GerenteInterface body){
         
@@ -92,7 +96,7 @@ public class AdministradorController {
             gerente.idGerente = body.codGerente;
 
             gerenteRepository.save(gerente);
-            gerenteRepository.asignarParqueadero(body.codGerente, body.codParquedero);
+            DBservicio.asingnarParqueadero(body.codGerente, body.codParquedero);
             mailService.mandarCorreonuevoRegistro(body.email, body.userName, body.pass);
             gerenteRepository.insertarLoginGerente(user.userName);
 
