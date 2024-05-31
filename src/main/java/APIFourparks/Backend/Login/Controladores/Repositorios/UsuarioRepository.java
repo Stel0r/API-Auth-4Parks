@@ -16,6 +16,6 @@ public interface UsuarioRepository extends CrudRepository<Usuario,String>{
     @Modifying
     @Transactional
     @Query(value = "UPDATE USUARIO SET I_ESTADO = 'A',N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO = ?",nativeQuery = true)
-    public void desbloquear(String user);
+    public int desbloquear(String user);
 
 }

@@ -17,7 +17,7 @@ public interface GerenteRepository extends CrudRepository<Gerente,String>{
 
     @Modifying
     @Query(nativeQuery = true,value = "UPDATE Parqueadero SET K_COD_GERENTE = ? WHERE K_COD_PARQUEADERO = ?")
-    public void asignarParqueadero(String codGerente, String codParqueadero);
+    public int asignarParqueadero(String codGerente, String codParqueadero);
 
     @Query(value = "insert into LOGIN_GERENTE values(?)",nativeQuery = true)
     public void insertarLoginGerente(String user);
