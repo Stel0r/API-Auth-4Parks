@@ -49,7 +49,7 @@ public class ConexionService {
             }
             throw new Exception("Usuario o contraseña incorrecta");
         }else if(resultado.get(0).get("I_ESTADO").equals("B")){
-            throw new Exception("Su cuenta esta bloqueada bloqueada, por favor comuniquese con el Administrador");
+            throw new Exception("Su cuenta esta bloqueada, por favor comuniquese con el Administrador");
         }
         conexion.EjecutarQuery("UPDATE USUARIO SET N_INTENTOS_FALLIDOS = 0 WHERE N_NOMBRE_USUARIO ='"+user+"'");
         HashMap<String,Object> response = new HashMap<>(Map.of("message","conectado!","token",jwtUtils.generateToken(user),"rol",resultado.get(0).get("I_ROL")));
@@ -68,7 +68,7 @@ public class ConexionService {
     }
 
     public void asingnarParqueadero(String codGerente,String codParqueadero){
-        conexion.EjecutarQuery("UPDATE GERENTE SET K_COD_PARQUEADERO = '"+codParqueadero+"' WHERE K_COD_GERENTE = '"+codGerente+"'");
+        conexion.EjecutarQuery("UPDATE Parqueadero SET K_COD_PARQUEADERO = '"+codParqueadero+"' WHERE K_COD_GERENTE = '"+codGerente+"'");
     }
 
     public Map<String,Object> registrarUsuario(RegistroClienteBody body) throws Exception{
